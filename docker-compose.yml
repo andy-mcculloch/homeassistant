@@ -1,0 +1,33 @@
+version: '3.7'
+services:
+  homeassistant:
+    image: homeassistant/home-assistant:stable
+    container_name: homeassistant
+    volumes:
+      - "config:/config/"
+    devices:
+      - "/dev/ttyACM0:/dev/ttyACM0"
+    restart: unless-stopped
+    expose:
+      - 8123
+    networks:
+      - web
+    dns: 172.18.0.5
+    dns_search: local
+    environment: 
+      - TZ="UTC"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=web"
+      - "traefik.http.routers.hass.rule=Host(`hass.example.co.uk`)"
+      - "traefik.http.services.hass.loadbalancer.server.port=8123"
+      - "traefik.http.routers.hass.entrypoints=websecure"
+      - "traefik.http.routers.hass.tls.certresolver=le_dns"
+
+networks:
+  web:
+    external: true
+
+volumes:
+  config:
+

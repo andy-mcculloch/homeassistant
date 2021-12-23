@@ -1,0 +1,5 @@
+config/*log*
+config/tts/
+config/OZW_Log.txt
+config/*db*
+config/*.sqlite

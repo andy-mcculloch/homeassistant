@@ -12,14 +12,14 @@ services:
       - 8123
     networks:
       - web
-    dns: 172.18.0.5
-    dns_search: local
-    environment: 
+    #    dns: 192.168.1.6
+    #    dns_search: mhd.mccullonas.co.uk
+    environment:
       - TZ="UTC"
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=web"
-      - "traefik.http.routers.hass.rule=Host(`hass.example.co.uk`)"
+      - "traefik.http.routers.hass.rule=Host(`hass.mccullonas.co.uk`)"
       - "traefik.http.services.hass.loadbalancer.server.port=8123"
       - "traefik.http.routers.hass.entrypoints=websecure"
       - "traefik.http.routers.hass.tls.certresolver=le_dns"
@@ -30,4 +30,3 @@ networks:
 
 volumes:
   config:
-

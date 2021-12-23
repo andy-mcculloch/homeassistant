@@ -124,7 +124,7 @@
   - platform: rest
     name: Go rates today
     resource_template: >-
-      {% set region = 'H' %}
+      {% set region = 'B' %}
       {% set from = as_timestamp(as_timestamp(now())|timestamp_custom('%Y-%m-%d') + 'T00:00:00') %}
       {% set to = from + 24 * 60 * 60 %}
       {% set format = '%Y-%m-%dT%H:%M:%SZ' %}
@@ -142,7 +142,7 @@
   - platform: rest
     name: Go rates off peak
     resource_template: >-
-      {% set region = 'H' %}
+      {% set region = 'B' %}
       {% set from = as_timestamp(as_timestamp(now())|timestamp_custom('%Y-%m-%d') + 'T00:30:00') %}
       {% set to = from + 4 %}
       {% set format = '%Y-%m-%dT%H:%M:%SZ' %}

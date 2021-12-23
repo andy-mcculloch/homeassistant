@@ -4,7 +4,7 @@ services:
     image: homeassistant/home-assistant:stable
     container_name: homeassistant
     volumes:
-      - "config:/config/"
+      - "./config/:/config/"
     devices:
       - "/dev/ttyACM0:/dev/ttyACM0"
     restart: unless-stopped
@@ -28,5 +28,5 @@ networks:
   web:
     external: true
 
-volumes:
-  config:
+# volumes:
+#   config:

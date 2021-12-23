@@ -28,5 +28,5 @@ networks:
   web:
     external: true
 
-# volumes:
-#   config:
+    #volumes:
+    #  config:

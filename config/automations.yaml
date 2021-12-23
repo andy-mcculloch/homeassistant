@@ -1,0 +1,151 @@
+- id: '1578349741922'
+  alias: Sync ceiling lights
+  description: ''
+  trigger:
+  - device_id: a0678cae82c841c3965f7e3084cb1714
+    domain: light
+    entity_id: light.fibaro_system_fgd212_dimmer_2_level_19
+    platform: device
+    type: turned_on
+  condition: []
+  action:
+  - entity_id: light.fibaro_system_fgd212_dimmer_2_level_17
+    service: light.turn_on
+- id: '1578436940353'
+  alias: Kitchen Nightlight
+  description: ''
+  trigger:
+  - device_id: f893f785b1334b4988e6207f1c1e3ae2
+    domain: binary_sensor
+    entity_id: binary_sensor.philio_technology_corp_psp05_pir_motion_sensor
+    platform: device
+    type: turned_on
+  condition: []
+  action:
+  - data: {}
+    entity_id: light.fibaro_system_fgd212_dimmer_2_level_23
+    service: light.turn_on
+  - delay: '10'
+  - entity_id: light.fibaro_system_fgd212_dimmer_2_level_23
+    service: light.turn_off
+- id: '1579019789512'
+  alias: Sync Dining Ceiling On
+  description: ''
+  trigger:
+  - device_id: a0678cae82c841c3965f7e3084cb1714
+    domain: light
+    entity_id: light.fibaro_system_fgd212_dimmer_2_level_19
+    platform: device
+    type: turned_on
+  condition: []
+  action:
+  - device_id: 39205764acd542ac990063c9118e6cd0
+    domain: light
+    entity_id: light.fibaro_system_fgrgbwm441_rgbw_controller_level_5
+    type: turn_on
+- id: '1579019895676'
+  alias: Sync Dining Ceiling Off
+  description: ''
+  trigger:
+  - device_id: a0678cae82c841c3965f7e3084cb1714
+    domain: light
+    entity_id: light.fibaro_system_fgd212_dimmer_2_level_19
+    platform: device
+    type: turned_off
+  condition: []
+  action:
+  - device_id: 39205764acd542ac990063c9118e6cd0
+    domain: light
+    entity_id: light.fibaro_system_fgrgbwm441_rgbw_controller_level_5
+    type: turn_off
+- id: '1580774119137'
+  alias: Turn on Booze Fridge
+  description: ''
+  trigger:
+  - at: 09:00
+    platform: time
+  condition:
+  - condition: time
+    weekday:
+    - wed
+  action:
+  - entity_id: switch.wifiswitch1
+    service: switch.turn_on
+- id: '1587804161950'
+  alias: Sync Kitchen Pendants on
+  description: Turns the pendants on with the under cupboard lights
+  trigger:
+  - device_id: ed34fea5b0c14f18978bb9f9e059ae2c
+    domain: light
+    entity_id: light.fibaro_system_fgd212_dimmer_2_level_23
+    platform: device
+    type: turned_on
+  condition: []
+  action:
+  - device_id: f36bc9ea46394ead92d228cb8dd201d8
+    domain: light
+    entity_id: light.fibaro_system_fgd212_dimmer_2_level_22
+    type: turn_on
+- id: '1587804257807'
+  alias: Sync Kitchen Pendants Off
+  description: Turns kitchen pendants off with kitchen worktop lights
+  trigger:
+  - device_id: ed34fea5b0c14f18978bb9f9e059ae2c
+    domain: light
+    entity_id: light.fibaro_system_fgd212_dimmer_2_level_23
+    platform: device
+    type: turned_off
+  condition: []
+  action:
+  - device_id: f36bc9ea46394ead92d228cb8dd201d8
+    domain: light
+    entity_id: light.fibaro_system_fgd212_dimmer_2_level_22
+    type: turn_off
+- id: '1640107311361'
+  alias: Christmas Lights On
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 607f03ff525f41bb8c5c1be5e0bb2233
+    entity_id: light.fibaro_system_fgd212_dimmer_2_level_5
+    domain: light
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 9f19630f0837380f982ee9722379cc21
+    entity_id: switch.wifiswitch2
+    domain: switch
+  - type: turn_on
+    device_id: ad0baac213a9471eb8a148224ca0dbe6
+    entity_id: switch.wifiswitch3_2
+    domain: switch
+  - type: turn_on
+    device_id: 62a620ff0d5731399e709a59e92c96cb
+    entity_id: switch.wifiswitch4_2
+    domain: switch
+  mode: single
+- id: '1640107462469'
+  alias: Christmas Lights Off
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_off
+    device_id: 607f03ff525f41bb8c5c1be5e0bb2233
+    entity_id: light.fibaro_system_fgd212_dimmer_2_level_5
+    domain: light
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 9f19630f0837380f982ee9722379cc21
+    entity_id: switch.wifiswitch2
+    domain: switch
+  - type: turn_off
+    device_id: ad0baac213a9471eb8a148224ca0dbe6
+    entity_id: switch.wifiswitch3_2
+    domain: switch
+  - type: turn_off
+    device_id: 62a620ff0d5731399e709a59e92c96cb
+    entity_id: switch.wifiswitch4_2
+    domain: switch
+  mode: single

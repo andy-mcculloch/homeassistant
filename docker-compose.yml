@@ -13,8 +13,8 @@ services:
       - 1400:1400
     networks:
       - web
-    dns: 192.168.1.6
-    dns_search: hass.mccullonas.co.uk
+    # dns: 192.168.1.6
+    # dns_search: mhd.mccullonas.co.uk
     environment:
       - TZ="UTC"
     labels:

@@ -376,18 +376,18 @@
         unit_of_measurement: '£'
         device_class: monetary
 
-- platform: template
-  sensors:
-    total_energy_cost:
-      friendly_name: "Energy Cost - Total"
-      value_template: "{{ states('sensor.electricity_cost') | float + states('sensor.electricity_cost_off_peak') | float + states('sensor.gas_cost') | float}}"
-      unit_of_measurement: '£'
-      device_class: monetary
+  - platform: template
+    sensors:
+      total_energy_cost:
+        friendly_name: "Energy Cost - Total"
+        value_template: "{{ states('sensor.electricity_cost') | float + states('sensor.electricity_cost_off_peak') | float + states('sensor.gas_cost') | float}}"
+        unit_of_measurement: '£'
+        device_class: monetary
 
-- platform: template
-  sensors:
-    total_energy_consumption:
-      friendly_name: "Energy Consumption - Total"
-      value_template: "{{ states('sensor.electricity_consumption') | float + states('sensor.electricity_consumption_off_peak') | float + states('sensor.gas_consumption') | float}}"
-      unit_of_measurement: 'kWh'
-      device_class: energy
+  - platform: template
+    sensors:
+      total_energy_consumption:
+        friendly_name: "Energy Consumption - Total"
+        value_template: "{{ states('sensor.electricity_consumption') | float + states('sensor.electricity_consumption_off_peak') | float + states('sensor.gas_consumption') | float}}"
+        unit_of_measurement: 'kWh'
+        device_class: energy

@@ -44,6 +44,7 @@ sensor: !include sensor.yaml
 
 sonos:
   media_player:
+    advertise_addr: 192.168.1.6
     hosts:
       - BedroomSonos.mhd.mccullonas.co.uk
       - OfficeSonos.mhd.mccullonas.co.uk
@@ -51,7 +52,6 @@ sonos:
       - DiningRoomSonos.mhd.mccullonas.co.uk
       - GuestRoomSonos.mhd.mccullonas.co.uk
       - LoungeSonos.mhd.mccullonas.co.uk
-    advertise_addr: 192.168.1.6
 
 weather:
   - platform: darksky

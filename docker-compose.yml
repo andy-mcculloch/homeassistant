@@ -10,7 +10,7 @@ services:
     restart: unless-stopped
     ports:
       - 8123:8123
-      - 1400@1400
+      - 1400:1400
     networks:
       - web
     dns: 192.168.1.6

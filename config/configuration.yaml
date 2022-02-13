@@ -51,6 +51,7 @@ sonos:
       - DiningRoomSonos.mhd.mccullonas.co.uk
       - GuestRoomSonos.mhd.mccullonas.co.uk
       - LoungeSonos.mhd.mccullonas.co.uk
+    advertise_addr: hass.mccullonas.co.uk
 
 weather:
   - platform: darksky

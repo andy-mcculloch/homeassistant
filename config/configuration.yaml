@@ -29,18 +29,11 @@ sensor: !include sensor.yaml
 #  host: 'pihole.mccullonas.co.uk'
 #  ssl: true
 #  verify_ssl: true
-#  api_key: a7a65d945681f0ed84b2073b1de2deb0f712a35c46687fe7ac0084f966fb2502
+#  api_key: !secret pihole_auth
 
-#evohome:
-#  username: admin@andymcculloch.co.uk
-#  password: 0uUc@2R^Y*IjWL&o
-  #  password: 5rRI08rmJanQk$M&
-
-  #climate:
-  #  - platform: honeywell
-  #    region: eu
-  #    username: andy@andymcculloch.co.uk
-  #    password: 5rRI08rmJanQk$M&
+evohome:
+ username: admin@andymcculloch.co.uk
+ password: !secret evohome_auth
 
 sonos:
   media_player:
@@ -55,7 +48,7 @@ sonos:
 
 weather:
   - platform: darksky
-    api_key: 96d217ce827e78d1aa78a2b4dc9cfa53
+    api_key: !secret darksky_auth
     mode: daily
 
     #camera:
@@ -63,7 +56,7 @@ weather:
     #    name: Back Garden
     #    host: camera1.mhd.mccullonas.co.uk
     #    username: homeassistant
-    #    password: N3nq^318p2YCSt$
+    #    password: !secret camera_auth
     #    port: 80
     #    profile: 1
 

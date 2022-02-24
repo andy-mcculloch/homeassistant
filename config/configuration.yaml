@@ -32,8 +32,9 @@ sensor: !include sensor.yaml
 #  api_key: !secret pihole_auth
 
 evohome:
- username: admin@andymcculloch.co.uk
+ username: andy@andymcculloch.co.uk
  password: !secret evohome_auth
+ scan_interval: 180
 
 sonos:
   media_player:

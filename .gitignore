@@ -4,3 +4,4 @@ config/OZW_Log.txt
 config/*db*
 config/*.sqlite
 config/secrets.yaml
+python

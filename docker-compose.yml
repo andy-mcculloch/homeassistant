@@ -38,9 +38,9 @@ services:
     image: eclipse-mosquitto:2
     container_name: mqtt
     volumes:
-      - "mqtt_config/:/mqtt/config:ro"
-      - "mqtt_log/:/mqtt/log"
-      - "mqtt_data/:/data"
+      - mqtt_config:/mqtt/config:ro
+      - mqtt_log:/mqtt/log
+      - mqtt_data:/data
     restart: always
     ports:
       - 1883:1883
@@ -52,7 +52,6 @@ services:
       - ${DNS_IP1}
       # - ${DNS_IP2}
     dns_search: ${DOMAIN}    
-
   zwavejsui:
     container_name: zwavejsui
     image: zwavejs/zwave-js-ui:10
@@ -85,7 +84,6 @@ services:
       - "traefik.http.services.zwavejs.loadbalancer.server.port=8091"
       - "traefik.http.routers.zwavejs.entrypoints=websecure"
       - "traefik.http.routers.zwavejs.tls.certresolver=le_dns"
-
   lms:
     container_name: lms
     image: lmscommunity/lyrionmusicserver:stable
@@ -116,7 +114,6 @@ services:
       - "traefik.http.services.lms.loadbalancer.server.port=9000"
       - "traefik.http.routers.lms.entrypoints=websecure"
       - "traefik.http.routers.lms.tls.certresolver=le_dns"
-
   esphome:
     container_name: esphome
     image: ghcr.io/esphome/esphome:stable

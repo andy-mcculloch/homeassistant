@@ -1,33 +1,158 @@
-version: '3.7'
+name: homeassistant
 services:
   homeassistant:
     image: homeassistant/home-assistant:stable
     container_name: homeassistant
+    restart: always
+    networks:
+      proxy:
+        # ipv4_address:
+      macvlan-system:
+        # ipv4_address:
+    dns:
+      - ${DNS_IP1}
+      # - ${DNS_IP2}
+    dns_search: ${DOMAIN}    
     volumes:
-      - "./config/:/config/"
+      - "${HA_CONFIG}:/config/"
+      - "${HA_WWW}:/www/"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "${HA_MEDIA}:/media"
     devices:
       - "/dev/ttyACM0:/dev/ttyACM0"
-    restart: unless-stopped
+      - "/dev/ttyUSB0:/dev/ttyUSB0"
     ports:
       - 8123:8123
       - 1400:1400
-    networks:
-      - web
-    # dns: 192.168.1.6
-    # dns_search: mhd.mccullonas.co.uk
     environment:
       - TZ="UTC"
     labels:
       - "traefik.enable=true"
-      - "traefik.docker.network=web"
-      - "traefik.http.routers.hass.rule=Host(`hass.mccullonas.co.uk`)"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.hass.rule=Host(`hass2.${DOMAIN}`)"
       - "traefik.http.services.hass.loadbalancer.server.port=8123"
       - "traefik.http.routers.hass.entrypoints=websecure"
       - "traefik.http.routers.hass.tls.certresolver=le_dns"
 
-networks:
-  web:
-    external: true
+  mqtt:
+    image: eclipse-mosquitto:2
+    container_name: mqtt
+    volumes:
+      - "mqtt_config/:/mqtt/config:ro"
+      - "mqtt_log/:/mqtt/log"
+      - "mqtt_data/:/data"
+    restart: always
+    ports:
+      - 1883:1883
+      - 9001:9001
+    networks:
+      proxy:
+        # ipv4_address:
+    dns:
+      - ${DNS_IP1}
+      # - ${DNS_IP2}
+    dns_search: ${DOMAIN}    
 
-    #volumes:
-    #  config:
+  zwavejsui:
+    container_name: zwavejsui
+    image: zwavejs/zwave-js-ui:10
+    restart: always
+    tty: true
+    stop_signal: SIGINT
+    environment:
+      - SESSION_SECRET=${ZWAVEJS_SESSION_SECRET}
+      - ZWAVEJS_EXTERNAL_CONFIG=/usr/src/app/store/.config-db
+    networks:
+      proxy:
+        # ipv4_address:
+    dns:
+      - ${DNS_IP1}
+      # - ${DNS_IP2}
+    dns_search: ${DOMAIN}    
+    devices:
+      # Do not use /dev/ttyUSBX serial devices, as those mappings can change over time.
+      # Instead, use the /dev/serial/by-id/X serial device for your Z-Wave stick.
+      - '/dev/serial/by-id/usb-0658_0200-if00:/dev/zwave'
+    volumes:
+      - zwavejs_config:/usr/src/app/store
+    ports:
+      - 8091:8091 # port for web interface
+      - 3000:3000 # port for Z-Wave JS websocket server
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.zwavejs.rule=Host(`zwavejs.${DOMAIN}`)"
+      - "traefik.http.services.zwavejs.loadbalancer.server.port=8091"
+      - "traefik.http.routers.zwavejs.entrypoints=websecure"
+      - "traefik.http.routers.zwavejs.tls.certresolver=le_dns"
+
+  lms:
+    container_name: lms
+    image: lmscommunity/lyrionmusicserver:stable
+    volumes:
+      - ${LMS_CONFIG}:/config:rw
+      - ${LMS_PLAYLIST}:/playlist:rw
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    ports:
+      - 9000:9000/tcp
+      - 9090:9090/tcp
+      - 3483:3483/tcp
+      - 3483:3483/udp
+    networks:
+      proxy:
+        # ipv4_address: 
+      macvlan-system:
+        # ipv4_address: 
+    dns:
+      - ${DNS_IP1}
+      # - ${DNS_IP2}
+    dns_search: ${DOMAIN}
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.lms.rule=Host(`lms.${DOMAIN}`)"
+      - "traefik.http.services.lms.loadbalancer.server.port=9000"
+      - "traefik.http.routers.lms.entrypoints=websecure"
+      - "traefik.http.routers.lms.tls.certresolver=le_dns"
+
+  esphome:
+    container_name: esphome
+    image: ghcr.io/esphome/esphome:stable
+    volumes:
+      - ${ESP_CONFIG_DIR}:/config
+      - /etc/localtime:/etc/localtime:ro
+    privileged: true
+    restart: unless-stopped
+    ports:
+      - 6052:6052
+    networks:
+      proxy:
+        # ipv4_address:
+      macvlan-system:
+    dns:
+      - ${DNS_IP1}
+      # - ${DNS_IP2}
+    dns_search: ${DOMAIN}
+    environment:
+      - TZ="UTC"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.esphome.rule=Host(`esphome.${DOMAIN}`)"
+      - "traefik.http.services.esphome.loadbalancer.server.port=6052"
+      - "traefik.http.routers.esphome.entrypoints=websecure"
+      - "traefik.http.routers.esphome.tls.certresolver=le_dns"
+
+volumes:
+  mqtt_config:
+  mqtt_log:
+  mqtt_data:
+  zwavejs_config:
+
+networks:
+  macvlan-system:
+    external: true
+  proxy:
+    external: true

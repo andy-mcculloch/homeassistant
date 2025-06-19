@@ -76,7 +76,7 @@ services:
       - zwavejs_config:/usr/src/app/store
     ports:
       - 8091:8091 # port for web interface
-      # - 3000:3000 # port for Z-Wave JS websocket server
+      - 3000:3000 # port for Z-Wave JS websocket server
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"

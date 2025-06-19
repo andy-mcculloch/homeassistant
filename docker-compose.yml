@@ -18,9 +18,9 @@ services:
       - "${HA_WWW}:/www/"
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "${HA_MEDIA}:/media"
-    # devices:
-      # - "/dev/ttyACM0:/dev/ttyACM0"
-      # - "/dev/ttyUSB0:/dev/ttyUSB0"
+    devices:
+      - "/dev/ttyACM0:/dev/ttyACM0"
+      - "/dev/ttyUSB0:/dev/ttyUSB0"
     ports:
       - 8123:8123
       - 1400:1400

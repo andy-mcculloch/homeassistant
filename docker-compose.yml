@@ -29,7 +29,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"
-      - "traefik.http.routers.hass.rule=Host(`hass2.${DOMAIN}`)"
+      - "traefik.http.routers.hass.rule=Host(`hass.${DOMAIN}`)"
       - "traefik.http.services.hass.loadbalancer.server.port=8123"
       - "traefik.http.routers.hass.entrypoints=websecure"
       - "traefik.http.routers.hass.tls.certresolver=le_dns"

@@ -5,3 +5,4 @@ config/*db*
 config/*.sqlite
 config/secrets.yaml
 python
+.env

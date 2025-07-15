@@ -5,10 +5,8 @@ services:
     container_name: homeassistant
     restart: always
     networks:
-      proxy:
-        # ipv4_address:
-      macvlan-system:
-        # ipv4_address:
+      cctv-vlan:
+      proxy-vlan:
     dns:
       - ${DNS_IP1}
       - ${DNS_IP2}
@@ -28,7 +26,7 @@ services:
       - TZ="UTC"
     labels:
       - "traefik.enable=true"
-      - "traefik.docker.network=proxy"
+      - "traefik.docker.network=proxy-vlan"
       - "traefik.http.routers.hass.rule=Host(`hass.${DOMAIN}`)"
       - "traefik.http.services.hass.loadbalancer.server.port=8123"
       - "traefik.http.routers.hass.entrypoints=websecure"
@@ -46,7 +44,7 @@ services:
       - 1883:1883
       # - 9001:9001
     networks:
-      proxy:
+      proxy-vlan:
         # ipv4_address:
     dns:
       - ${DNS_IP1}
@@ -62,7 +60,7 @@ services:
       - SESSION_SECRET=${ZWAVEJS_SESSION_SECRET}
       - ZWAVEJS_EXTERNAL_CONFIG=/usr/src/app/store/.config-db
     networks:
-      proxy:
+      proxy-vlan:
         # ipv4_address:
     dns:
       - ${DNS_IP1}
@@ -79,7 +77,7 @@ services:
       - 3000:3000 # port for Z-Wave JS websocket server
     labels:
       - "traefik.enable=true"
-      - "traefik.docker.network=proxy"
+      - "traefik.docker.network=proxy-vlan"
       - "traefik.http.routers.zwavejs.rule=Host(`zwavejs.${DOMAIN}`)"
       - "traefik.http.services.zwavejs.loadbalancer.server.port=8091"
       - "traefik.http.routers.zwavejs.entrypoints=websecure"
@@ -98,10 +96,7 @@ services:
       - 3483:3483/tcp
       - 3483:3483/udp
     networks:
-      proxy:
-        # ipv4_address: 
-      macvlan-system:
-        # ipv4_address: 
+      proxy-vlan:
     dns:
       - ${DNS_IP1}
       - ${DNS_IP2}
@@ -109,7 +104,7 @@ services:
     restart: always
     labels:
       - "traefik.enable=true"
-      - "traefik.docker.network=proxy"
+      - "traefik.docker.network=proxy-vlan"
       - "traefik.http.routers.lms.rule=Host(`lms.${DOMAIN}`)"
       - "traefik.http.services.lms.loadbalancer.server.port=9000"
       - "traefik.http.routers.lms.entrypoints=websecure"
@@ -125,9 +120,7 @@ services:
     ports:
       - 6052:6052
     networks:
-      proxy:
-        # ipv4_address:
-      macvlan-system:
+      proxy-vlan:
     dns:
       - ${DNS_IP1}
       - ${DNS_IP2}
@@ -136,7 +129,7 @@ services:
       - TZ="UTC"
     labels:
       - "traefik.enable=true"
-      - "traefik.docker.network=proxy"
+      - "traefik.docker.network=proxy-vlan"
       - "traefik.http.routers.esphome.rule=Host(`esphome.${DOMAIN}`)"
       - "traefik.http.services.esphome.loadbalancer.server.port=6052"
       - "traefik.http.routers.esphome.entrypoints=websecure"
@@ -151,5 +144,5 @@ volumes:
 networks:
   macvlan-system:
     external: true
-  proxy:
+  proxy-vlan:
     external: true

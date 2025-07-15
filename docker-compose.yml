@@ -142,7 +142,7 @@ volumes:
   zwavejs_config:
 
 networks:
-  macvlan-system:
+  cctv-vlan:
     external: true
   proxy-vlan:
     external: true

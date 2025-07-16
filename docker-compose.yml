@@ -49,7 +49,10 @@ services:
     dns:
       - ${DNS_IP1}
       - ${DNS_IP2}
-    dns_search: ${DOMAIN}    
+    dns_search: ${DOMAIN}
+    labels:
+      - "traefik.enable=false"
+     
   zwavejsui:
     container_name: zwavejsui
     image: zwavejs/zwave-js-ui:10

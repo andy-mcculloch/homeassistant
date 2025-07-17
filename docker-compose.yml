@@ -6,7 +6,9 @@ services:
     restart: always
     networks:
       cctv-vlan:
+        mac_address: ${CCTV_VLAN_MAC}
       proxy-vlan:
+        mac_address: ${PROXY_VLAN_MAC}
     dns:
       - ${DNS_IP1}
       - ${DNS_IP2}
@@ -45,7 +47,7 @@ services:
       # - 9001:9001
     networks:
       proxy-vlan:
-        # ipv4_address:
+        mac_address: ${PROXY_VLAN_MAC2}
     dns:
       - ${DNS_IP1}
       - ${DNS_IP2}
@@ -64,7 +66,7 @@ services:
       - ZWAVEJS_EXTERNAL_CONFIG=/usr/src/app/store/.config-db
     networks:
       proxy-vlan:
-        # ipv4_address:
+        mac_address: ${PROXY_VLAN_MAC3}
     dns:
       - ${DNS_IP1}
       - ${DNS_IP2}
@@ -100,6 +102,7 @@ services:
       - 3483:3483/udp
     networks:
       proxy-vlan:
+        mac_address: ${PROXY_VLAN_MAC4}
     dns:
       - ${DNS_IP1}
       - ${DNS_IP2}
@@ -124,6 +127,7 @@ services:
       - 6052:6052
     networks:
       proxy-vlan:
+        mac_address: ${PROXY_VLAN_MAC5}
     dns:
       - ${DNS_IP1}
       - ${DNS_IP2}

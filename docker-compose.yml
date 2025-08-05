@@ -38,7 +38,7 @@ services:
     image: eclipse-mosquitto:2
     container_name: mqtt
     volumes:
-      - mqtt_config:/mqtt/config:ro
+      - mqtt_config:/mqtt/config
       - mqtt_log:/mqtt/log
       - mqtt_data:/data
     restart: always

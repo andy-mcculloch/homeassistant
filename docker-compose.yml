@@ -48,6 +48,7 @@ services:
     networks:
       proxy-vlan:
         mac_address: ${PROXY_VLAN_MAC2}
+      iot-vlan:
     dns:
       - ${DNS_IP1}
       - ${DNS_IP2}
@@ -128,6 +129,7 @@ services:
     networks:
       proxy-vlan:
         mac_address: ${PROXY_VLAN_MAC5}
+      iot-vlan:
     dns:
       - ${DNS_IP1}
       - ${DNS_IP2}
@@ -150,6 +152,8 @@ volumes:
 
 networks:
   cctv-vlan:
+    external: true
+  iot-vlan:
     external: true
   proxy-vlan:
     external: true
